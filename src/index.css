@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --color-cream: #FBF5EA;
+  --color-gold: #C5A059;
+  --color-gold-light: #E6C987;
+  --color-blush: #F8DDE3;
+  --color-rose: #D58EA1;
+  --color-mauve: #6F5A61;
+  --color-ink: #33272B;
+  --color-pink-pastel: #FDF4F5;
+  --color-pink-dark: #E8C5CC;
+
+  --font-sans: "Montserrat", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-script: "Great Vibes", cursive;
+}
+
+:root {
+  color: #33272b;
+  background: #fbf5ea;
+  font: 16px/1.55 "Montserrat", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(244, 204, 214, 0.38), transparent 32rem),
+    linear-gradient(180deg, #fbf5ea 0%, #f8e9de 100%);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100svh;
+  margin: 0;
+  background: transparent;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.paper-grain {
+  /* position: relative; */
+  isolation: isolate;
+}
+
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.68) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 82% 34%, rgba(150, 106, 83, 0.12) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 36% 72%, rgba(255, 255, 255, 0.58) 0 1px, transparent 1.6px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(209, 162, 143, 0.12));
+  background-size: 18px 18px, 22px 22px, 26px 26px, 100% 100%;
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+}
+
+.ornate-panel {
+  position: relative;
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.78), rgba(251, 245, 234, 0.68)),
+    radial-gradient(circle at 50% 0%, rgba(248, 221, 227, 0.42), transparent 70%);
+  box-shadow: 0 18px 50px rgba(141, 83, 98, 0.1);
+}
+
+.ornate-panel::before,
+.ornate-panel::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-color: rgba(197, 160, 89, 0.52);
+  pointer-events: none;
+}
+
+.ornate-panel::before {
+  left: 9px;
+  top: 9px;
+  border-left: 1px solid;
+  border-top: 1px solid;
+}
+
+.ornate-panel::after {
+  right: 9px;
+  bottom: 9px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
