@@ -34,7 +34,7 @@ const FloralSprig = ({ className = '', flip = false }) => (
 );
 
 const SectionTitle = ({ eyebrow, title }) => (
-  <div className="mb-8 text-center">
+  <div className="mb-3 text-center">
     <p className="mb-3 font-serif text-[0.65rem] uppercase tracking-[0.32em] text-gold">{eyebrow}</p>
     <h3 className="font-script text-5xl leading-none text-ink">{title}</h3>
   </div>
@@ -46,15 +46,16 @@ const DetailIcon = ({ icon: Icon }) => (
   </span>
 );
 
-export default function Invitation() {
-  const totalBoletos = 5;
-  const whatsappNumber = "527221234567";
-  const mensajeRSVP = `¡Hola! Confirmo la asistencia de ${totalBoletos} personas a los XV años de Isabella.`;
+export default function Invitation({ invitado }) {
+  const totalBoletos = invitado?.pases || 0;
+  const nombreInvitado = invitado?.nombre || 'Invitado especial';
+  const whatsappNumber = "7222611354"; //prueba
+  const mensajeRSVP = `¡Hola! La ${nombreInvitado} y confirmo la asistencia de ${totalBoletos} personas a los XV años de Tessy.`;
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetDate = new Date("2026-10-17T18:00:00").getTime();
+    const targetDate = new Date("2026-07-18T18:00:00").getTime(); //Fecha y Hora
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -100,7 +101,7 @@ export default function Invitation() {
           <div className="mx-auto mb-7 flex h-24 w-24 items-center justify-center rounded-full border border-gold/25 bg-cream/60 shadow-[0_18px_45px_rgba(141,83,98,0.12)]">
             <span className="font-serif text-4xl italic text-gold">XV</span>
           </div>
-          <h1 className="mb-4 font-script text-[5.7rem] leading-[0.88] text-ink">Isabella</h1>
+          <h1 className="mb-4 font-script text-[5.7rem] leading-[0.88] text-ink">Tessy</h1>
           <p className="mx-auto max-w-[18rem] font-serif text-[0.68rem] uppercase leading-6 tracking-[0.26em] text-mauve">
             Y compartirlos con las personas que amas los hace inolvidables
           </p>
@@ -113,7 +114,7 @@ export default function Invitation() {
           <div className="ornate-panel px-6 py-10">
             <Heart className="mx-auto mb-5 h-6 w-6 text-gold" strokeWidth={1.3} />
             <h2 className="mb-6 font-serif text-lg uppercase tracking-[0.24em] text-gold">Con la bendición de Dios</h2>
-            <p className="mx-auto max-w-xs font-serif text-lg italic leading-8 text-mauve">
+            <p className="mx-auto font-serif text-lg italic leading-8 text-mauve">
               Tengo el honor de invitarte a celebrar una noche llena de amor, gratitud y sueños.
             </p>
           </div>
@@ -124,8 +125,8 @@ export default function Invitation() {
         <ScrollReveal>
           <SectionTitle eyebrow="En compañía de mis padres" title="Mi familia" />
           <div className="space-y-3 font-sans text-[0.95rem] font-light leading-7 text-mauve">
-            <p>Roberto Martínez García</p>
-            <p>Ana Laura Hernández</p>
+            <p>Beatriz Dominguez</p>
+            <p>Miguel Colin Carandia</p>
           </div>
 
           <div className="mx-auto my-10 flex w-32 items-center justify-center gap-3">
@@ -136,8 +137,8 @@ export default function Invitation() {
 
           <p className="mb-5 font-serif text-[0.65rem] uppercase tracking-[0.3em] text-gold">Y mis padrinos</p>
           <div className="space-y-3 font-sans text-[0.95rem] font-light leading-7 text-mauve">
-            <p>Carlos Mendoza</p>
-            <p>María Fernanda López</p>
+            <p>........</p>
+            <p>........</p>
           </div>
         </ScrollReveal>
       </section>
@@ -165,16 +166,16 @@ export default function Invitation() {
 
       <section className="px-6 py-12">
         <ScrollReveal>
-          <SectionTitle eyebrow="Sábado 17 de octubre 2026" title="Ceremonia" />
+          <SectionTitle eyebrow="Sábado 8 de Julio 2026" title="Ceremonia" />
           <div className="space-y-5 text-center font-light leading-7 text-mauve">
             <DetailIcon icon={Calendar} />
-            <p>Sábado, 17 de Octubre 2026</p>
+            <p className='mt-[-2px]'>Sábado, 18 de Julio 2026</p>
             <DetailIcon icon={Clock} />
             <p>18:00 hrs</p>
             <DetailIcon icon={MapPin} />
-            <p>Catedral de San José de Toluca<br />Av. Independencia 303, Centro</p>
+            <p>Rectoría de Nuestra Señora del Perpetuo Socorro<br />Calle Manuel Doblado Manzana 005, Pilares, 52179 San Jerónimo Chicahualco, Méx.</p>
             <a
-              href="https://maps.google.com"
+              href="https://maps.app.goo.gl/eoea3sEjCbpxTGv86"
               target="_blank"
               rel="noreferrer"
               className="mt-4 inline-flex min-h-11 items-center justify-center border border-gold/70 bg-cream/70 px-6 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-gold transition-colors hover:bg-gold hover:text-white"
@@ -190,11 +191,11 @@ export default function Invitation() {
           <SectionTitle eyebrow="Después de la ceremonia" title="Recepción" />
           <div className="space-y-5 text-center font-light leading-7 text-mauve">
             <DetailIcon icon={Clock} />
-            <p>20:30 hrs</p>
+            <p>18:00 hrs</p>
             <DetailIcon icon={MapPin} />
-            <p>Salón de Eventos "La Elegancia"<br />Paseo Tollocan Sur</p>
+            <p>Salón de Eventos "Ana Lucía Toluca"<br />C. Industria Minera 601, Delegación San Lorenzo Tepaltitlán, 50010 San Lorenzo Tepaltitlán, Méx.</p>
             <a
-              href="https://maps.google.com"
+              href="https://maps.app.goo.gl/u1nFHkkxksvp5GoDA"
               target="_blank"
               rel="noreferrer"
               className="mt-4 inline-flex min-h-11 items-center justify-center border border-gold/70 bg-cream/70 px-6 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-gold transition-colors hover:bg-gold hover:text-white"
@@ -208,14 +209,14 @@ export default function Invitation() {
       <section className="px-6 py-12">
         <ScrollReveal>
           <div className="grid gap-5">
-            <div className="ornate-panel px-6 py-8 text-center">
+            <div className="ornate-panel px-6 py-8 text-center leading-6">
               <DetailIcon icon={Shirt} />
               <h4 className="mb-3 mt-5 font-serif text-sm uppercase tracking-[0.22em] text-ink">Código de Vestimenta</h4>
               <p className="font-light text-mauve">Formal / Etiqueta Rigurosa</p>
               <p className="mt-3 font-serif text-[0.68rem] uppercase tracking-[0.22em] text-rose">Reservado color rosa</p>
             </div>
 
-            <div className="ornate-panel px-6 py-8 text-center">
+            <div className="ornate-panel px-6 py-8 text-center leading-6">
               <DetailIcon icon={Gift} />
               <h4 className="mb-3 mt-5 font-serif text-sm uppercase tracking-[0.22em] text-ink">Regalos</h4>
               <p className="font-light leading-7 text-mauve">
@@ -230,10 +231,13 @@ export default function Invitation() {
         <ScrollReveal>
           <div className="relative border border-gold/30 bg-cream/65 px-6 py-10 shadow-[0_20px_60px_rgba(141,83,98,0.12)]">
             <FloralSprig className="absolute -right-12 -top-12 h-32 w-44 opacity-55" flip />
-            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-cream px-4">
+            <div className=" absolute -top-6 left-1/2 -translate-x-1/2 bg-cream px-4 rounded-t-lg">
               <Ticket className="h-9 w-9 text-gold" strokeWidth={1.35} />
             </div>
             <h3 className="mb-6 mt-5 font-serif text-lg uppercase tracking-[0.24em] text-ink">Pases de Acceso</h3>
+            <p className="mb-3 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-gold">
+              {nombreInvitado}
+            </p>
             <p className="mb-5 font-light leading-7 text-mauve">
               Hemos reservado <strong className="font-medium text-gold">{totalBoletos} lugares</strong> para ti.
             </p>
@@ -243,7 +247,7 @@ export default function Invitation() {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensajeRSVP)}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-12 items-center justify-center bg-gold px-7 font-serif text-[0.7rem] uppercase tracking-[0.22em] text-white shadow-[0_16px_35px_rgba(197,160,89,0.3)] transition-colors hover:bg-gold-light"
+              className="inline-flex mt-5 min-h-12 items-center justify-center bg-gold px-7 font-serif text-[0.7rem] uppercase tracking-[0.22em] text-white shadow-[0_16px_35px_rgba(197,160,89,0.3)] transition-colors hover:bg-gold-light"
             >
               Confirmar Asistencia
             </a>
