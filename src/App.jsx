@@ -24,7 +24,11 @@ export default function App() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const audioRef = useRef(null);
   const invitadoActual = obtenerInvitadoActual();
-  const volumenMusica = 0.35;
+  const volumenMusica = 1;
+  //   0.15 // muy bajo
+  // 0.35 // discreto
+  // 0.60 // medio
+  // 1    // máximo
 
   const abrirInvitacion = () => {
     setIsOpen(true);
