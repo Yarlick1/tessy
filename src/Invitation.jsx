@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Calendar, Gift, Shirt, Ticket, Heart } from 'lucide-react';
 
+const carouselImages = Object.entries(
+  import.meta.glob('./assets/ele/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}', {
+    eager: true,
+    import: 'default'
+  })
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
 const ScrollReveal = ({ children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 34 }}
@@ -45,6 +54,39 @@ const DetailIcon = ({ icon: Icon }) => (
     <Icon className="h-5 w-5" strokeWidth={1.45} />
   </span>
 );
+
+const ImageCarousel = () => {
+  const [activeImage, setActiveImage] = useState(0);
+
+  useEffect(() => {
+    if (carouselImages.length <= 1) return undefined;
+
+    const interval = setInterval(() => {
+      setActiveImage((current) => (current + 1) % carouselImages.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!carouselImages.length) return null;
+
+  return (
+    <div className="mx-auto mt-10 w-full max-w-[19rem]">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-t-full border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+        {carouselImages.map((image, index) => (
+          <img
+            key={image}
+            src={image}
+            alt={`Tessy ${index + 1}`}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${index === activeImage ? 'opacity-100' : 'opacity-0'
+              }`}
+          />
+        ))}
+        <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
+      </div>
+    </div>
+  );
+};
 
 export default function Invitation({ invitado }) {
   const totalBoletos = invitado?.pases || 0;
@@ -106,6 +148,16 @@ export default function Invitation({ invitado }) {
             Y compartirlos con las personas que amas los hace inolvidables
           </p>
           <div className="mx-auto mt-11 h-24 w-px bg-gradient-to-b from-gold/0 via-gold/55 to-gold/0" />
+          {/* contenedor imagen */}
+          <div className="mx-auto mt-2 w-full max-w-[19rem]">
+
+            <div className="relative aspect-[3/5] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+              <img src="principal-eje.png" alt="" className='absolute inset-0 h-full w-full object-cover transition-opacity' />
+              <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
+            </div>
+
+          </div>
+
         </ScrollReveal>
       </section>
 
@@ -125,7 +177,7 @@ export default function Invitation({ invitado }) {
         <ScrollReveal>
           <SectionTitle eyebrow="En compañía de mis padres" title="Mi familia" />
           <div className="space-y-3 font-sans text-[0.95rem] font-light leading-7 text-mauve">
-            <p>Beatriz Dominguez</p>
+            <p>Maria Beatriz Dominguez Flores</p>
             <p>Miguel Colin Carandia</p>
           </div>
 
@@ -135,10 +187,11 @@ export default function Invitation({ invitado }) {
             <span className="h-px flex-1 bg-gold/40" />
           </div>
 
-          <p className="mb-5 font-serif text-[0.65rem] uppercase tracking-[0.3em] text-gold">Y mis padrinos</p>
+          <p className="mb-5 font-serif text-[0.65rem] uppercase tracking-[0.3em] text-gold">Y mis hermanos</p>
           <div className="space-y-3 font-sans text-[0.95rem] font-light leading-7 text-mauve">
-            <p>........</p>
-            <p>........</p>
+            <p>Yareli Betzabeth Colin Dominguez</p>
+            <p>Miguel Arisaac Colin Dominguez</p>
+            <p>Francisco Azael Colin Dominguez</p>
           </div>
         </ScrollReveal>
       </section>
@@ -166,7 +219,7 @@ export default function Invitation({ invitado }) {
 
       <section className="px-6 py-12">
         <ScrollReveal>
-          <SectionTitle eyebrow="Sábado 8 de Julio 2026" title="Ceremonia" />
+          <SectionTitle eyebrow="Sábado 18 de Julio 2026" title="Ceremonia" />
           <div className="space-y-5 text-center font-light leading-7 text-mauve">
             <DetailIcon icon={Calendar} />
             <p className='mt-[-2px]'>Sábado, 18 de Julio 2026</p>
@@ -260,6 +313,7 @@ export default function Invitation({ invitado }) {
         <ScrollReveal>
           <h2 className="mb-4 font-script text-6xl text-ink">Gracias</h2>
           <p className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-mauve">Por ser parte de mi historia</p>
+          <ImageCarousel />
         </ScrollReveal>
       </section>
     </main>
