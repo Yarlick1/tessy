@@ -11,6 +11,15 @@ const carouselImages = Object.entries(
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([, src]) => src);
 
+const carouselImagesIglesia = Object.entries(
+  import.meta.glob('./assets/misa/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}', {
+    eager: true,
+    import: 'default'
+  })
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
 const ScrollReveal = ({ children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 34 }}
@@ -44,13 +53,13 @@ const FloralSprig = ({ className = '', flip = false }) => (
 
 const SectionTitle = ({ eyebrow, title }) => (
   <div className="mb-3 text-center">
-    <p className="mb-3 font-serif text-[0.65rem] uppercase tracking-[0.32em] text-gold">{eyebrow}</p>
+    <p className="mb-3 font-serif text-[0.80rem] uppercase tracking-[0.32em] text-gold">{eyebrow}</p>
     <h3 className="font-script text-5xl leading-none text-ink">{title}</h3>
   </div>
 );
 
 const DetailIcon = ({ icon: Icon }) => (
-  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/25 bg-cream/70 text-gold shadow-sm">
+  <span className="mb-[5px] mt-[1rem] inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/25 bg-cream/70 text-gold shadow-sm">
     <Icon className="h-5 w-5" strokeWidth={1.45} />
   </span>
 );
@@ -87,6 +96,40 @@ const ImageCarousel = () => {
     </div>
   );
 };
+
+const ImageCarouselIglesia = () => {
+  const [activeImage2, setActiveImage2] = useState(0);
+
+
+  useEffect(() => {
+    if (carouselImagesIglesia.length <= 1) return undefined;
+
+    const interval2 = setInterval(() => {
+      setActiveImage2((current) => (current + 1) % carouselImagesIglesia.length);
+    }, 3000);
+
+    return () => clearInterval(interval2);
+  }, []);
+
+  if (!carouselImagesIglesia.length) return null;
+  return (
+    <div className="mx-auto mt-10 w-full">
+      <div className="relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+        {carouselImagesIglesia.map((imageMisa, index) => (
+          <img
+            key={imageMisa}
+            src={imageMisa}
+            alt={`Tessy ${index + 1}`}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${index === activeImage2 ? 'opacity-100' : 'opacity-0'
+              }`}
+          />
+        ))}
+        <div className="pointer-events-none absolute shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
+      </div>
+    </div>
+  );
+};
+
 
 export default function Invitation({ invitado }) {
   const totalBoletos = invitado?.pases || 0;
@@ -133,18 +176,18 @@ export default function Invitation({ invitado }) {
       <div className="pointer-events-none absolute inset-y-0 right-3 w-px bg-gold/15" />
 
       <section className="relative min-h-[92svh] px-6 pb-10 pt-16 text-center">
-        <FloralSprig className="absolute -left-16 top-2 h-44 w-56 opacity-80" />
+        <FloralSprig className="absolute -left-16 top-[-1rem] h-44 w-56 opacity-80" />
         <FloralSprig className="absolute -right-16 bottom-14 h-44 w-56 opacity-80" flip />
 
         <ScrollReveal>
-          <p className="mx-auto mb-7 max-w-[18rem] font-serif text-[0.68rem] uppercase leading-6 tracking-[0.28em] text-mauve">
+          <p className="mx-auto mb-7 max-w-[18rem] font-serif text-[0.9rem] uppercase leading-6 tracking-[0.28em] text-mauve">
             Hay momentos en la vida que son especiales
           </p>
-          <div className="mx-auto mb-7 flex h-24 w-24 items-center justify-center rounded-full border border-gold/25 bg-cream/60 shadow-[0_18px_45px_rgba(141,83,98,0.12)]">
+          <div className="mx-auto my-[2rem] flex h-24 w-24 items-center justify-center rounded-full border border-gold/25 bg-cream/60 shadow-[0_18px_45px_rgba(141,83,98,0.12)]">
             <span className="font-serif text-4xl italic text-gold">XV</span>
           </div>
-          <h1 className="mb-4 font-script text-[5.7rem] leading-[0.88] text-ink">Tessy</h1>
-          <p className="mx-auto max-w-[18rem] font-serif text-[0.68rem] uppercase leading-6 tracking-[0.26em] text-mauve">
+          <h1 className="mb-4 font-script text-[5.7rem] leading-[0.88] text-ink">Tessy</h1><br />
+          <p className="mx-auto max-w-[18rem] font-serif text-[0.9rem] uppercase leading-6 tracking-[0.26em] text-mauve">
             Y compartirlos con las personas que amas los hace inolvidables
           </p>
           <div className="mx-auto mt-11 h-24 w-px bg-gradient-to-b from-gold/0 via-gold/55 to-gold/0" />
@@ -176,8 +219,8 @@ export default function Invitation({ invitado }) {
       <section className="px-6 py-12 text-center">
         <ScrollReveal>
           <SectionTitle eyebrow="En compañía de mis padres" title="Mi familia" />
-          <div className="space-y-3 font-sans text-[0.95rem] font-light leading-7 text-mauve">
-            <p>Maria Beatriz Dominguez Flores</p>
+          <div className="space-y-3 font-sans text-[1.1rem] font-light leading-7 text-mauve">
+            <p>María Beatriz Dominguez Flores</p>
             <p>Miguel Colin Carandia</p>
           </div>
 
@@ -187,11 +230,10 @@ export default function Invitation({ invitado }) {
             <span className="h-px flex-1 bg-gold/40" />
           </div>
 
-          <p className="mb-5 font-serif text-[0.65rem] uppercase tracking-[0.3em] text-gold">Y mis hermanos</p>
-          <div className="space-y-3 font-sans text-[0.95rem] font-light leading-7 text-mauve">
-            <p>Yareli Betzabeth Colin Dominguez</p>
-            <p>Miguel Arisaac Colin Dominguez</p>
-            <p>Francisco Azael Colin Dominguez</p>
+          <p className="mb-5 font-serif text-[0.75rem] uppercase tracking-[0.3em] text-gold">Y mis padrinos</p>
+          <div className="space-y-3 font-sans text-[1.1rem] font-light leading-7 text-mauve">
+            <p>Griselda Colin Carandia</p>
+            <p>Bernardo Vázquez Vilchis</p>
           </div>
         </ScrollReveal>
       </section>
@@ -200,7 +242,7 @@ export default function Invitation({ invitado }) {
         <FloralSprig className="absolute -left-20 top-0 h-36 w-48 opacity-55" />
         <ScrollReveal>
           <div className="bg-blush/75 px-5 py-9 shadow-[inset_0_0_0_1px_rgba(197,160,89,0.16)]">
-            <h3 className="mb-8 text-center font-serif text-[0.72rem] uppercase tracking-[0.34em] text-gold">Faltan</h3>
+            <h3 className="mb-8 text-center font-serif text-[0.72rem] uppercase tracking-[0.5em] text-gold">Faltan</h3>
             <div className="grid grid-cols-4 gap-2 text-center">
               {Object.entries(timeLeft).map(([unit, value]) => (
                 <div key={unit} className="min-w-0">
@@ -219,19 +261,20 @@ export default function Invitation({ invitado }) {
 
       <section className="px-6 py-12">
         <ScrollReveal>
-          <SectionTitle eyebrow="Sábado 18 de Julio 2026" title="Ceremonia" />
-          <div className="space-y-5 text-center font-light leading-7 text-mauve">
+          <SectionTitle eyebrow="Itirenario" title="Ceremonia" />
+          <div className="space-y-5 text-center font-light leading-8 text-mauve">
             <DetailIcon icon={Calendar} />
-            <p className='mt-[-2px]'>Sábado, 18 de Julio 2026</p>
+            <p className='mt-[-2px] text-[1.1rem]'>Sábado, 18 de Julio 2026</p>
             <DetailIcon icon={Clock} />
-            <p>18:00 hrs</p>
+            <p className='text-[1.1rem]'>PENDIENTE hrs</p>
             <DetailIcon icon={MapPin} />
-            <p>Rectoría de Nuestra Señora del Perpetuo Socorro<br />Calle Manuel Doblado Manzana 005, Pilares, 52179 San Jerónimo Chicahualco, Méx.</p>
+            <p className='text-[1.1rem]'>Rectoría de Nuestra Señora del Perpetuo Socorro<br />Calle Manuel Doblado Manzana 005, Pilares, 52179 San Jerónimo Chicahualco, Méx.</p>
+            <ImageCarouselIglesia />
             <a
               href="https://maps.app.goo.gl/eoea3sEjCbpxTGv86"
               target="_blank"
               rel="noreferrer"
-              className="mt-4 inline-flex min-h-11 items-center justify-center border border-gold/70 bg-cream/70 px-6 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-gold transition-colors hover:bg-gold hover:text-white"
+              className="mt-4 inline-flex min-h-11 items-center justify-center border border-gold/70 bg-cream/70 px-6 font-serif text-[0.9rem] uppercase tracking-[0.24em] text-gold transition-colors hover:bg-gold hover:text-white"
             >
               Ver en Mapa
             </a>
@@ -244,14 +287,14 @@ export default function Invitation({ invitado }) {
           <SectionTitle eyebrow="Después de la ceremonia" title="Recepción" />
           <div className="space-y-5 text-center font-light leading-7 text-mauve">
             <DetailIcon icon={Clock} />
-            <p>18:00 hrs</p>
+            <p className='text-[1.1rem]'>PENDIENTE hrs</p>
             <DetailIcon icon={MapPin} />
-            <p>Salón de Eventos "Ana Lucía Toluca"<br />C. Industria Minera 601, Delegación San Lorenzo Tepaltitlán, 50010 San Lorenzo Tepaltitlán, Méx.</p>
+            <p className='text-[1.1rem]'>Salón de Eventos "Ana Lucía Toluca"<br />C. Industria Minera 601, Delegación San Lorenzo Tepaltitlán, 50010 San Lorenzo Tepaltitlán, Méx.</p>
             <a
               href="https://maps.app.goo.gl/u1nFHkkxksvp5GoDA"
               target="_blank"
               rel="noreferrer"
-              className="mt-4 inline-flex min-h-11 items-center justify-center border border-gold/70 bg-cream/70 px-6 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-gold transition-colors hover:bg-gold hover:text-white"
+              className="mt-4 inline-flex min-h-11 items-center justify-center border border-gold/70 bg-cream/70 px-6 font-serif text-[0.9rem] uppercase tracking-[0.24em] text-gold transition-colors hover:bg-gold hover:text-white"
             >
               Ver en Mapa
             </a>
@@ -266,7 +309,7 @@ export default function Invitation({ invitado }) {
               <DetailIcon icon={Shirt} />
               <h4 className="mb-3 mt-5 font-serif text-sm uppercase tracking-[0.22em] text-ink">Código de Vestimenta</h4>
               <p className="font-light text-mauve">Formal / Etiqueta Rigurosa</p>
-              <p className="mt-3 font-serif text-[0.68rem] uppercase tracking-[0.22em] text-rose">Reservado color rosa</p>
+              <p className="mt-3 font-serif text-[0.9rem] uppercase tracking-[0.22em] text-rose">Reservado color rosa</p>
             </div>
 
             <div className="ornate-panel px-6 py-8 text-center leading-6">
@@ -288,7 +331,7 @@ export default function Invitation({ invitado }) {
               <Ticket className="h-9 w-9 text-gold" strokeWidth={1.35} />
             </div>
             <h3 className="mb-6 mt-5 font-serif text-lg uppercase tracking-[0.24em] text-ink">Pases de Acceso</h3>
-            <p className="mb-3 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-gold">
+            <p className="mb-3 font-serif text-[0.9rem] uppercase tracking-[0.24em] text-gold">
               {nombreInvitado}
             </p>
             <p className="mb-5 font-light leading-7 text-mauve">
@@ -312,7 +355,7 @@ export default function Invitation({ invitado }) {
         <FloralSprig className="absolute -bottom-8 left-1/2 h-40 w-56 -translate-x-1/2 opacity-55" />
         <ScrollReveal>
           <h2 className="mb-4 font-script text-6xl text-ink">Gracias</h2>
-          <p className="font-serif text-[0.68rem] uppercase tracking-[0.28em] text-mauve">Por ser parte de mi historia</p>
+          <p className="font-serif text-[0.9rem] uppercase tracking-[0.28em] text-mauve">Por ser parte de mi historia</p>
           <ImageCarousel />
         </ScrollReveal>
       </section>

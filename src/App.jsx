@@ -88,12 +88,12 @@ export default function App() {
               className="relative z-10 p-[1em] flex h-full max-h-[46rem] w-full max-w-[22rem] flex-col items-center justify-center text-center"
             >
               <div className="mb-7">
-                <p className="mb-3 font-serif text-[0.62rem] uppercase leading-5 tracking-[0.34em] text-gold">
+                <p className="mb-3 font-serif text-[0.8rem] uppercase leading-5 tracking-[0.34em] text-gold">
                   Tenemos el honor de invitarte a
                 </p>
-                <h2 className="mb-1 font-serif text-[1.55rem] italic leading-none text-ink">Mis XV Años</h2>
-                <h1 className="font-script text-[5rem]  text-ink">Tessy</h1>
-                <p className="mx-auto mt-4 max-w-[17rem] font-serif text-[0.68rem] uppercase leading-6 tracking-[0.2em] text-mauve">
+                <h2 className="mb-1 font-serif text-[1.78rem] italic leading-none text-ink">Mis XV Años</h2>
+                <h1 className="font-script text-[6rem]  text-ink">Tessy</h1>
+                <p className="mx-auto mt-4 font-serif text-[0.8rem] uppercase leading-6 tracking-[0.2em] text-mauve">
                   Una noche para celebrar sueños, amor y familia
                 </p>
               </div>
@@ -133,12 +133,12 @@ export default function App() {
               </div>
 
               <div className="w-full max-w-[20rem] border border-gold/30 bg-cream/70 px-5 py-4 shadow-[0_18px_45px_rgba(113,73,83,0.12)] backdrop-blur-sm">
-                <p className="mb-3 font-serif text-[0.62rem] uppercase tracking-[0.24em] text-mauve">
+                <p className="mb-3 font-serif text-[0.8rem] uppercase tracking-[0.24em] text-mauve">
                   {invitadoActual.nombre}
                 </p>
-                <p className="mb-1 font-serif text-[0.62rem] uppercase tracking-[0.28em] text-gold">Pases reservados</p>
+                <p className="mb-1 font-serif text-[0.8rem] uppercase tracking-[0.28em] text-gold">Pases reservados</p>
                 <p className="font-serif text-2xl text-ink">
-                  {invitadoActual.pases} <span className="text-base italic text-mauve">personas</span>
+                  {invitadoActual.pases} {/* <span className="text-base italic text-mauve"></span> */}
                 </p>
               </div>
             </motion.div>
