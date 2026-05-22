@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Calendar, Gift, Shirt, Ticket, Heart } from 'lucide-react';
+import { MapPin, Clock, Calendar, Shirt, Ticket, Heart } from 'lucide-react'; {/* Icono regalo: Gift*/ }
 
 const carouselImages = Object.entries(
   import.meta.glob('./assets/ele/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}', {
@@ -13,6 +13,15 @@ const carouselImages = Object.entries(
 
 const carouselImagesIglesia = Object.entries(
   import.meta.glob('./assets/misa/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}', {
+    eager: true,
+    import: 'default'
+  })
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
+const carouselImagesSalon = Object.entries(
+  import.meta.glob('./assets/salon/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}', {
     eager: true,
     import: 'default'
   })
@@ -113,7 +122,7 @@ const ImageCarouselIglesia = () => {
 
   if (!carouselImagesIglesia.length) return null;
   return (
-    <div className="mx-auto mt-10 w-full">
+    <div className="mx-[-1.5rem] mt-10 ">
       <div className="relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
         {carouselImagesIglesia.map((imageMisa, index) => (
           <img
@@ -131,11 +140,45 @@ const ImageCarouselIglesia = () => {
 };
 
 
+const ImageCarouselSalon = () => {
+  const [activeImage3, setActiveImage3] = useState(0);
+
+
+  useEffect(() => {
+    if (carouselImagesSalon.length <= 1) return undefined;
+
+    const interval3 = setInterval(() => {
+      setActiveImage3((current) => (current + 1) % carouselImagesSalon.length);
+    }, 3000);
+
+    return () => clearInterval(interval3);
+  }, []);
+
+  if (!carouselImagesSalon.length) return null;
+  return (
+    <div className="mx-[-1.6rem] mt-10">
+      <div className="relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+        {carouselImagesSalon.map((imageSalon, index) => (
+          <img
+            key={imageSalon}
+            src={imageSalon}
+            alt={`Tessy ${index + 1}`}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${index === activeImage3 ? 'opacity-100' : 'opacity-0'
+              }`}
+          />
+        ))}
+        <div className="pointer-events-none absolute shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
+      </div>
+    </div>
+  );
+};
+
 export default function Invitation({ invitado }) {
   const totalBoletos = invitado?.pases || 0;
   const nombreInvitado = invitado?.nombre || 'Invitado especial';
-  const whatsappNumber = "7222611354"; //prueba
-  const mensajeRSVP = `¡Hola! La ${nombreInvitado} y confirmo la asistencia de ${totalBoletos} personas a los XV años de Tessy.`;
+  // condicional para invitado especial
+  let mensajeRSVP = nombreInvitado === 'Invitado especial' ? `¡Hola! confirmo mi asistencia a los XV años de Tessy.` : `¡Hola! La ${nombreInvitado} confirma la asistencia de ${totalBoletos} personas a los XV años de Tessy.`;
+  const whatsappNumber = "7225983205"; //Num Yar
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -266,7 +309,7 @@ export default function Invitation({ invitado }) {
             <DetailIcon icon={Calendar} />
             <p className='mt-[-2px] text-[1.1rem]'>Sábado, 18 de Julio 2026</p>
             <DetailIcon icon={Clock} />
-            <p className='text-[1.1rem]'>PENDIENTE hrs</p>
+            <p className='text-[1.1rem]'><b>**pendiete**</b>  hrs</p>
             <DetailIcon icon={MapPin} />
             <p className='text-[1.1rem]'>Rectoría de Nuestra Señora del Perpetuo Socorro<br />Calle Manuel Doblado Manzana 005, Pilares, 52179 San Jerónimo Chicahualco, Méx.</p>
             <ImageCarouselIglesia />
@@ -287,9 +330,10 @@ export default function Invitation({ invitado }) {
           <SectionTitle eyebrow="Después de la ceremonia" title="Recepción" />
           <div className="space-y-5 text-center font-light leading-7 text-mauve">
             <DetailIcon icon={Clock} />
-            <p className='text-[1.1rem]'>PENDIENTE hrs</p>
+            <p className='text-[1.1rem]'><b>**pendiete**</b> hrs</p>
             <DetailIcon icon={MapPin} />
             <p className='text-[1.1rem]'>Salón de Eventos "Ana Lucía Toluca"<br />C. Industria Minera 601, Delegación San Lorenzo Tepaltitlán, 50010 San Lorenzo Tepaltitlán, Méx.</p>
+            <ImageCarouselSalon />
             <a
               href="https://maps.app.goo.gl/u1nFHkkxksvp5GoDA"
               target="_blank"
@@ -312,13 +356,13 @@ export default function Invitation({ invitado }) {
               <p className="mt-3 font-serif text-[0.9rem] uppercase tracking-[0.22em] text-rose">Reservado color rosa</p>
             </div>
 
-            <div className="ornate-panel px-6 py-8 text-center leading-6">
+            {/* <div className="ornate-panel px-6 py-8 text-center leading-6">
               <DetailIcon icon={Gift} />
               <h4 className="mb-3 mt-5 font-serif text-sm uppercase tracking-[0.22em] text-ink">Regalos</h4>
               <p className="font-light leading-7 text-mauve">
                 Tu presencia es mi mejor regalo. Si deseas tener un detalle conmigo, habrá un buzón en el salón.
               </p>
-            </div>
+            </div> */}
           </div>
         </ScrollReveal>
       </section>
@@ -335,9 +379,9 @@ export default function Invitation({ invitado }) {
               {nombreInvitado}
             </p>
             <p className="mb-5 font-light leading-7 text-mauve">
-              Hemos reservado <strong className="font-medium text-gold">{totalBoletos} lugares</strong> para ti.
+              Hemos reservado <strong className="font-medium text-gold">{totalBoletos} {totalBoletos < 2 ? 'lugar' : 'lugares'}</strong> para ti.
             </p>
-            <p className="mb-8 font-light text-sm leading-6 text-mauve">Por favor, confirma tu asistencia antes del 1 de Octubre.</p>
+            <p className="mb-8 font-light text-sm leading-6 text-mauve">Por favor, confirma tu asistencia antes del <b>**pendiete**</b> .</p>
 
             <a
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensajeRSVP)}`}
