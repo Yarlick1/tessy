@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MapPin, Clock, Calendar, Shirt, Ticket, Heart } from 'lucide-react'; {/* Icono regalo: Gift*/ }
+
+gsap.registerPlugin(ScrollTrigger);
 
 const carouselImages = Object.entries(
   import.meta.glob('./assets/ele/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WEBP}', {
@@ -29,16 +32,37 @@ const carouselImagesSalon = Object.entries(
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([, src]) => src);
 
-const ScrollReveal = ({ children, delay = 0 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 34 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-90px" }}
-    transition={{ duration: 0.75, delay, ease: "easeOut" }}
-  >
-    {children}
-  </motion.div>
-);
+const ScrollReveal = ({ children, delay = 0 }) => {
+  const revealRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const element = revealRef.current;
+    if (!element) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.set(element, { autoAlpha: 0, y: 34, scale: 0.985 });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 86%',
+          toggleActions: 'play none none reverse'
+        }
+      })
+        .to(element, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: 'power3.out'
+        }, delay);
+    }, element);
+
+    return () => ctx.revert();
+  }, [delay]);
+
+  return <div ref={revealRef}>{children}</div>;
+};
 
 const FloralSprig = ({ className = '', flip = false }) => (
   <svg
@@ -90,7 +114,7 @@ const ImageCarousel = () => {
 
   return (
     <div className="mx-auto mt-10 w-full max-w-[19rem]">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-t-full border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+      <div className="glance-frame relative aspect-[4/5] overflow-hidden rounded-t-full border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
         {carouselImages.map((image, index) => (
           <img
             key={image}
@@ -100,6 +124,7 @@ const ImageCarousel = () => {
               }`}
           />
         ))}
+        <span className="glance-light" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
       </div>
     </div>
@@ -123,7 +148,7 @@ const ImageCarouselIglesia = () => {
   if (!carouselImagesIglesia.length) return null;
   return (
     <div className="mx-[-1.5rem] mt-10 ">
-      <div className="relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+      <div className="glance-frame relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
         {carouselImagesIglesia.map((imageMisa, index) => (
           <img
             key={imageMisa}
@@ -133,6 +158,7 @@ const ImageCarouselIglesia = () => {
               }`}
           />
         ))}
+        <span className="glance-light" aria-hidden="true" />
         <div className="pointer-events-none absolute shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
       </div>
     </div>
@@ -157,7 +183,7 @@ const ImageCarouselSalon = () => {
   if (!carouselImagesSalon.length) return null;
   return (
     <div className="mx-[-1.6rem] mt-10">
-      <div className="relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+      <div className="glance-frame relative aspect-[2/1] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
         {carouselImagesSalon.map((imageSalon, index) => (
           <img
             key={imageSalon}
@@ -167,6 +193,7 @@ const ImageCarouselSalon = () => {
               }`}
           />
         ))}
+        <span className="glance-light" aria-hidden="true" />
         <div className="pointer-events-none absolute shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
       </div>
     </div>
@@ -174,6 +201,7 @@ const ImageCarouselSalon = () => {
 };
 
 export default function Invitation({ invitado }) {
+  const invitationRef = useRef(null);
   const totalBoletos = invitado?.pases || 0;
   const nombreInvitado = invitado?.nombre || 'Invitado especial';
   // condicional para invitado especial
@@ -205,6 +233,45 @@ export default function Invitation({ invitado }) {
     return () => clearInterval(interval);
   }, []);
 
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .from('.hero-kicker', { autoAlpha: 0, y: 22, duration: 0.75 })
+        .from('.hero-seal', { autoAlpha: 0, y: 18, scale: 0.82, duration: 0.8 }, '-=0.35')
+        .from('.hero-title', { autoAlpha: 0, y: 26, scale: 0.94, duration: 1 }, '-=0.35')
+        .from('.hero-copy', { autoAlpha: 0, y: 20, duration: 0.75 }, '-=0.45')
+        .from('.hero-divider', { scaleY: 0, transformOrigin: 'center top', duration: 0.8 }, '-=0.25')
+        .from('.hero-photo', { autoAlpha: 0, y: 32, scale: 0.96, duration: 1 }, '-=0.2');
+
+      gsap.to('.floral-float', {
+        y: -10,
+        rotation: 1.8,
+        duration: 4.2,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.7
+      });
+
+      gsap.utils.toArray('.glance-light').forEach((light) => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: light.parentElement,
+            start: 'top 78%',
+            toggleActions: 'play none none reset'
+          }
+        })
+          .fromTo(light,
+            { xPercent: -170, autoAlpha: 0 },
+            { xPercent: 170, autoAlpha: 0.7, duration: 1.25, ease: 'power2.inOut' }
+          )
+          .to(light, { autoAlpha: 0, duration: 0.25 }, '-=0.25');
+      });
+    }, invitationRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const timeLabels = {
     days: 'Días',
     hours: 'Hrs',
@@ -213,32 +280,33 @@ export default function Invitation({ invitado }) {
   };
 
   return (
-    <main className="paper-grain relative mx-auto min-h-screen max-w-lg overflow-hidden bg-cream pb-16 text-ink shadow-[0_30px_90px_rgba(88,64,70,0.24)]">
+    <main ref={invitationRef} className="paper-grain relative mx-auto min-h-screen max-w-lg overflow-hidden bg-cream pb-16 text-ink shadow-[0_30px_90px_rgba(88,64,70,0.24)]">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[680px] bg-[radial-gradient(circle_at_50%_0%,rgba(244,204,214,0.72),transparent_58%)]" />
       <div className="pointer-events-none absolute inset-y-0 left-3 w-px bg-gold/15" />
       <div className="pointer-events-none absolute inset-y-0 right-3 w-px bg-gold/15" />
 
       <section className="relative min-h-[92svh] px-6 pb-10 pt-16 text-center">
-        <FloralSprig className="absolute -left-16 top-[-1rem] h-44 w-56 opacity-80" />
-        <FloralSprig className="absolute -right-16 bottom-14 h-44 w-56 opacity-80" flip />
+        <FloralSprig className="floral-float absolute -left-16 top-[-1rem] h-44 w-56 opacity-80" />
+        <FloralSprig className="floral-float absolute -right-16 bottom-14 h-44 w-56 opacity-80" flip />
 
         <ScrollReveal>
-          <p className="mx-auto mb-7 max-w-[18rem] font-serif text-[0.9rem] uppercase leading-6 tracking-[0.28em] text-mauve">
+          <p className="hero-kicker mx-auto mb-7 max-w-[18rem] font-serif text-[0.9rem] uppercase leading-6 tracking-[0.28em] text-mauve">
             Hay momentos en la vida que son especiales
           </p>
-          <div className="mx-auto my-[2rem] flex h-24 w-24 items-center justify-center rounded-full border border-gold/25 bg-cream/60 shadow-[0_18px_45px_rgba(141,83,98,0.12)]">
+          <div className="hero-seal mx-auto my-[2rem] flex h-24 w-24 items-center justify-center rounded-full border border-gold/25 bg-cream/60 shadow-[0_18px_45px_rgba(141,83,98,0.12)]">
             <span className="font-serif text-4xl italic text-gold">XV</span>
           </div>
-          <h1 className="mb-4 font-script text-[5.7rem] leading-[0.88] text-ink">Tessy</h1><br />
-          <p className="mx-auto max-w-[18rem] font-serif text-[0.9rem] uppercase leading-6 tracking-[0.26em] text-mauve">
+          <h1 className="hero-title mb-4 font-script text-[5.7rem] leading-[0.88] text-ink">Tessy</h1><br />
+          <p className="hero-copy mx-auto max-w-[18rem] font-serif text-[0.9rem] uppercase leading-6 tracking-[0.26em] text-mauve">
             Y compartirlos con las personas que amas los hace inolvidables
           </p>
-          <div className="mx-auto mt-11 h-24 w-px bg-gradient-to-b from-gold/0 via-gold/55 to-gold/0" />
+          <div className="hero-divider mx-auto mt-11 h-24 w-px bg-gradient-to-b from-gold/0 via-gold/55 to-gold/0" />
           {/* contenedor imagen */}
-          <div className="mx-auto mt-2 w-full max-w-[19rem]">
+          <div className="hero-photo mx-auto mt-2 w-full max-w-[19rem]">
 
-            <div className="relative aspect-[3/5] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
+            <div className="glance-frame relative aspect-[3/5] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
               <img src="principal-eje.png" alt="" className='absolute inset-0 h-full w-full object-cover transition-opacity' />
+              <span className="glance-light" aria-hidden="true" />
               <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
             </div>
 
@@ -282,7 +350,7 @@ export default function Invitation({ invitado }) {
       </section>
 
       <section className="relative my-6 px-6 py-14">
-        <FloralSprig className="absolute -left-20 top-0 h-36 w-48 opacity-55" />
+        <FloralSprig className="floral-float absolute -left-20 top-0 h-36 w-48 opacity-55" />
         <ScrollReveal>
           <div className="bg-blush/75 px-5 py-9 shadow-[inset_0_0_0_1px_rgba(197,160,89,0.16)]">
             <h3 className="mb-8 text-center font-serif text-[0.72rem] uppercase tracking-[0.5em] text-gold">Faltan</h3>
