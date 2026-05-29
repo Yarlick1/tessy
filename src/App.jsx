@@ -133,12 +133,12 @@ export default function App() {
               </div>
 
               <div className="w-full max-w-[20rem] border border-gold/30 bg-cream/70 px-5 py-4 shadow-[0_18px_45px_rgba(113,73,83,0.12)] backdrop-blur-sm">
-                <p className="mb-3 font-serif text-[0.8rem] uppercase tracking-[0.24em] text-mauve">
+                <p className={`mb-3 font-serif text-[0.8rem] uppercase tracking-[0.24em] ${invitadoActual.pases === 0 ? 'text-gold' : 'text-mauve'} `}>
                   {invitadoActual.nombre}
                 </p>
-                <p className="mb-1 font-serif text-[0.8rem] uppercase tracking-[0.28em] text-gold">Pases reservados</p>
+                <p className="mb-1 font-serif text-[0.8rem] uppercase tracking-[0.28em] text-gold">{invitadoActual.pases === 0 ? '' : 'Pases reservados'}</p>
                 <p className="font-serif text-2xl text-ink">
-                  {invitadoActual.pases} {/* <span className="text-base italic text-mauve"></span> */}
+                  {invitadoActual.pases === 0 ? '' : invitadoActual.pases} {/* <span className="text-base italic text-mauve"></span> */}
                 </p>
               </div>
             </motion.div>

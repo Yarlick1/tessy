@@ -11,7 +11,7 @@ const carouselImages = Object.entries(
     import: 'default'
   })
 )
-  .sort(([a], [b]) => a.localeCompare(b))
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
   .map(([, src]) => src);
 
 const carouselImagesIglesia = Object.entries(
@@ -205,7 +205,7 @@ export default function Invitation({ invitado }) {
   const totalBoletos = invitado?.pases || 0;
   const nombreInvitado = invitado?.nombre || 'Invitado especial';
   // condicional para invitado especial
-  let mensajeRSVP = nombreInvitado === 'Invitado especial' ? `¡Hola! confirmo mi asistencia a los XV años de Tessy.` : `¡Hola! La ${nombreInvitado} confirma la asistencia de ${totalBoletos} personas a los XV años de Tessy.`;
+  let mensajeRSVP = nombreInvitado === 'Invitado especial' || totalBoletos < 1 ? `¡Hola! confirmo mi asistencia a los XV años de Tessy.` : `¡Hola! La ${nombreInvitado} confirma la asistencia de ${totalBoletos} personas a los XV años de Tessy.`;
   const whatsappNumber = "7225983205"; //Num Yar
 
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -305,7 +305,7 @@ export default function Invitation({ invitado }) {
           <div className="hero-photo mx-auto mt-2 w-full max-w-[19rem]">
 
             <div className="glance-frame relative aspect-[3/5] overflow-hidden border border-gold/25 bg-blush/45 shadow-[0_24px_55px_rgba(141,83,98,0.18)]">
-              <img src="principal-eje.png" alt="" className='absolute inset-0 h-full w-full object-cover transition-opacity' />
+              <img src="principal.jpeg" alt="" className='absolute inset-0 h-full w-full object-cover transition-opacity' />
               <span className="glance-light" aria-hidden="true" />
               <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_10px_rgba(255,249,244,0.18),inset_0_-80px_90px_rgba(88,64,70,0.16)]" />
             </div>
@@ -377,7 +377,7 @@ export default function Invitation({ invitado }) {
             <DetailIcon icon={Calendar} />
             <p className='mt-[-2px] text-[1.1rem]'>Sábado, 18 de Julio 2026</p>
             <DetailIcon icon={Clock} />
-            <p className='text-[1.1rem]'><b>**pendiete**</b>  hrs</p>
+            <p className='text-[1.1rem]'><b>14:00 hrs</b> </p>
             <DetailIcon icon={MapPin} />
             <p className='text-[1.1rem]'>Rectoría de Nuestra Señora del Perpetuo Socorro<br />Calle Manuel Doblado Manzana 005, Pilares, 52179 San Jerónimo Chicahualco, Méx.</p>
             <ImageCarouselIglesia />
@@ -398,7 +398,7 @@ export default function Invitation({ invitado }) {
           <SectionTitle eyebrow="Después de la ceremonia" title="Recepción" />
           <div className="space-y-5 text-center font-light leading-7 text-mauve">
             <DetailIcon icon={Clock} />
-            <p className='text-[1.1rem]'><b>**pendiete**</b> hrs</p>
+            <p className='text-[1.1rem]'><b>17:30 hrs</b></p>
             <DetailIcon icon={MapPin} />
             <p className='text-[1.1rem]'>Salón de Eventos "Ana Lucía Toluca"<br />C. Industria Minera 601, Delegación San Lorenzo Tepaltitlán, 50010 San Lorenzo Tepaltitlán, Méx.</p>
             <ImageCarouselSalon />
@@ -447,7 +447,7 @@ export default function Invitation({ invitado }) {
               {nombreInvitado}
             </p>
             <p className="mb-5 font-light leading-7 text-mauve">
-              Hemos reservado <strong className="font-medium text-gold">{totalBoletos} {totalBoletos < 2 ? 'lugar' : 'lugares'}</strong> para ti.
+              Hemos reservado <strong className="font-medium text-gold">{totalBoletos < 1 ? '1' : totalBoletos} {totalBoletos < 2 ? 'lugar' : 'lugares'}</strong> para ti.
             </p>
             <p className="mb-8 font-light text-sm leading-6 text-mauve">Por favor, confirma tu asistencia antes del <b>**pendiete**</b> .</p>
 
