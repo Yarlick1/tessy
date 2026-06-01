@@ -1,8 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Invitation from './Invitation';
-import { Volume2, VolumeX } from 'lucide-react';
-import { obtenerInvitadoActual } from './data/invitados';
 
 const FloralCorner = ({ className = '' }) => (
   <svg className={className} viewBox="0 0 180 180" aria-hidden="true">
@@ -21,50 +19,10 @@ const FloralCorner = ({ className = '' }) => (
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-  const audioRef = useRef(null);
-  const invitadoActual = obtenerInvitadoActual();
-  const volumenMusica = 1;
-  //   0.15 // muy bajo
-  // 0.35 // discreto
-  // 0.60 // medio
-  // 1    // máximo
-
-  const abrirInvitacion = () => {
-    setIsOpen(true);
-
-    if (!audioRef.current) {
-      return;
-    }
-
-    audioRef.current.volume = volumenMusica;
-    audioRef.current.play()
-      .then(() => setIsMusicPlaying(true))
-      .catch(() => setIsMusicPlaying(false));
-  };
-
-  const alternarMusica = () => {
-    if (!audioRef.current) {
-      return;
-    }
-
-    audioRef.current.volume = volumenMusica;
-
-    if (audioRef.current.paused) {
-      audioRef.current.play()
-        .then(() => setIsMusicPlaying(true))
-        .catch(() => setIsMusicPlaying(false));
-      return;
-    }
-
-    audioRef.current.pause();
-    setIsMusicPlaying(false);
-  };
-
+  const totalBoletos = 5;
 
   return (
     <div className="min-h-screen bg-cream font-sans text-ink">
-      <audio ref={audioRef} src="No-Crezcas-Mas-Karaoke-Pista-Original-Tercer-Cielo.mp3.mpeg" loop preload="auto" />
       <AnimatePresence mode="wait">
         {!isOpen ? (
           <motion.div
@@ -88,12 +46,12 @@ export default function App() {
               className="relative z-10 p-[1em] flex h-full max-h-[46rem] w-full max-w-[22rem] flex-col items-center justify-center text-center"
             >
               <div className="mb-7">
-                <p className="mb-3 font-serif text-[0.8rem] uppercase leading-5 tracking-[0.34em] text-gold">
+                <p className="mb-3 font-serif text-[0.62rem] uppercase leading-5 tracking-[0.34em] text-gold">
                   Tenemos el honor de invitarte a
                 </p>
-                <h2 className="mb-1 font-serif text-[1.78rem] italic leading-none text-ink">Mis XV Años</h2>
-                <h1 className="font-script text-[6rem]  text-ink">Tessy</h1>
-                <p className="mx-auto mt-4 font-serif text-[0.8rem] uppercase leading-6 tracking-[0.2em] text-mauve">
+                <h2 className="mb-1 font-serif text-[1.55rem] italic leading-none text-ink">Mis XV Años</h2>
+                <h1 className="font-script text-[5rem]  text-ink">Tessy</h1>
+                <p className="mx-auto mt-4 max-w-[17rem] font-serif text-[0.68rem] uppercase leading-6 tracking-[0.2em] text-mauve">
                   Una noche para celebrar sueños, amor y familia
                 </p>
               </div>
@@ -110,8 +68,7 @@ export default function App() {
                 <div className="absolute left-1/2 top-[7.45rem] -translate-x-1/2 -translate-y-1/2">
                   <motion.button
                     type="button"
-                    onClick={abrirInvitacion}
-                    onClick={abrirInvitacion}
+                    onClick={() => setIsOpen(true)}
                     animate={{
                       scale: [1, 1.06, 1],
                       boxShadow: [
@@ -133,12 +90,9 @@ export default function App() {
               </div>
 
               <div className="w-full max-w-[20rem] border border-gold/30 bg-cream/70 px-5 py-4 shadow-[0_18px_45px_rgba(113,73,83,0.12)] backdrop-blur-sm">
-                <p className={`mb-3 font-serif text-[0.8rem] uppercase tracking-[0.24em] ${invitadoActual.pases === 0 ? 'text-gold' : 'text-mauve'} `}>
-                  {invitadoActual.nombre}
-                </p>
-                <p className="mb-1 font-serif text-[0.8rem] uppercase tracking-[0.28em] text-gold">{invitadoActual.pases === 0 ? '' : 'Pases reservados'}</p>
+                <p className="mb-1 font-serif text-[0.62rem] uppercase tracking-[0.28em] text-gold">Pases reservados</p>
                 <p className="font-serif text-2xl text-ink">
-                  {invitadoActual.pases === 0 ? '' : invitadoActual.pases} {/* <span className="text-base italic text-mauve"></span> */}
+                  {totalBoletos} <span className="text-base italic text-mauve">personas</span>
                 </p>
               </div>
             </motion.div>
@@ -150,25 +104,10 @@ export default function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            <Invitation invitado={invitadoActual} />
+            <Invitation />
           </motion.div>
         )}
       </AnimatePresence>
-
-      {isOpen && (
-        <button
-          type="button"
-          onClick={alternarMusica}
-          className="fixed bottom-5 right-5 z-[60] flex h-11 w-11 items-center justify-center rounded-full border border-gold/35 bg-cream/45 text-gold opacity-45 shadow-[0_10px_25px_rgba(113,73,83,0.14)] backdrop-blur-md transition hover:bg-cream/85 hover:opacity-100 focus:bg-cream/90 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-gold/40"
-          aria-label={isMusicPlaying ? 'Pausar musica' : 'Reproducir musica'}
-        >
-          {isMusicPlaying ? (
-            <Volume2 className="h-5 w-5" strokeWidth={1.5} />
-          ) : (
-            <VolumeX className="h-5 w-5" strokeWidth={1.5} />
-          )}
-        </button>
-      )}
     </div>
   );
 }

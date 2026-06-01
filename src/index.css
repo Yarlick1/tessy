@@ -122,26 +122,3 @@ p {
   border-right: 1px solid;
   border-bottom: 1px solid;
 }
-
-.glance-frame {
-  isolation: isolate;
-}
-
-.glance-light {
-  position: absolute;
-  inset: -20% auto -20% 0;
-  z-index: 2;
-  width: 34%;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateX(-170%) skewX(-18deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 249, 226, 0.58),
-    rgba(255, 255, 255, 0.12),
-    transparent
-  );
-  mix-blend-mode: screen;
-}
