@@ -2,14 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => {
-  // Si estamos en giHub Actions, esta variable existirá automáticamente
-  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true'
+// Comprobamos de forma 100% segura si existe GitHub Actions sin romper el editor
+const isGitHubActions = typeof globalThis.process?.env?.GITHUB_ACTIONS !== 'undefined'
 
-  return {
-    plugins: [react()],
-    // Si es GitHub, usa el subdirectorio. Si es Netlify (o local), usa la raíz.
-    base: isGitHubActions ? '/tessy/' : '/',
-  }
+export default defineConfig({
+  plugins: [react()],
+  base: isGitHubActions ? '/tessy/' : '/',
 
 })
