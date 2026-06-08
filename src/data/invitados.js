@@ -26,7 +26,7 @@ export const invitados = {
   },
   'fvazquez-rios': {
     nombre: 'Familia Vázquez Rios',
-    pases: 4
+    pases: 8
   },
   'fvazquez-garcia': {
     nombre: 'Familia Vázquez García',
@@ -40,16 +40,8 @@ export const invitados = {
     nombre: 'Familia Colín Gómez',
     pases: 2
   },
-  'famelia-leyva': {
-    nombre: 'Familia Amelia Leyva',
-    pases: 1
-  },
   'fmauricio-mendoza': {
     nombre: 'Familia Mauricio Mendoza',
-    pases: 2
-  },
-  'frivera': {
-    nombre: 'Familia Rivera',
     pases: 2
   },
   'fporras-perez': {
@@ -78,7 +70,7 @@ export const invitados = {
   },
   'fgaray': {
     nombre: 'Familia Garay',
-    pases: 8
+    pases: 6
   },
   'fconcha-hernandez': {
     nombre: 'Familia Concha Hernandez',
