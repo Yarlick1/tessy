@@ -285,7 +285,7 @@ export default function Invitation({ invitado }) {
       <div className="pointer-events-none absolute inset-y-0 left-3 w-px bg-gold/15" />
       <div className="pointer-events-none absolute inset-y-0 right-3 w-px bg-gold/15" />
 
-      <section className="relative min-h-[92svh] px-6 pb-10 pt-16 text-center">
+      <section className="relative min-h-[92svh] px-6 pb-10 pt-16 text-center flex justify-center">
         <FloralSprig className="floral-float absolute -left-16 top-[-1rem] h-44 w-56 opacity-80" />
         <FloralSprig className="floral-float absolute -right-16 bottom-14 h-44 w-56 opacity-80" flip />
 
