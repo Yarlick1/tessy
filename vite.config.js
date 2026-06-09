@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     // Si es GitHub Pages, usa el nombre de tu repositorio. Si es Netlify (o local), usa la raíz.
-    base: isGitHubPages ? '/TU_NOMBRE_DE_REPOSITORIO/' : '/',
+    base: isGitHubPages ? '/tessy/' : '/',
     build: {
       outDir: 'dist',
     }
