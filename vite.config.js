@@ -1,12 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
-// Comprobamos de forma 100% segura si existe GitHub Actions sin romper el editor
-const isGitHubActions = typeof globalThis.process?.env?.GITHUB_ACTIONS !== 'undefined'
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+  // GitHub Actions define automáticamente la variable GITHUB_ACTIONS como 'true'
+  // Netlify define la variable NETLIFY como 'true'
+  const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
 
-export default defineConfig({
-  plugins: [react()],
-  base: isGitHubActions ? '/tessy/' : '/',
-
+  return {
+    plugins: [react()],
+    // Si es GitHub Pages, usa el nombre de tu repositorio. Si es Netlify (o local), usa la raíz.
+    base: isGitHubPages ? '/TU_NOMBRE_DE_REPOSITORIO/' : '/',
+    build: {
+      outDir: 'dist',
+    }
+  }
 })
