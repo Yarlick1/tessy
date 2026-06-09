@@ -143,7 +143,7 @@ Utilizado para animaciones más avanzadas, secuencias personalizadas y efectos d
 Clona el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repositorio.git
+git clone https://github.com/Yarlick1/tessy.git
 ```
 
 Entra al proyecto:
@@ -273,8 +273,4 @@ Además de funcionar como invitación, el proyecto sirve como una muestra práct
 
 Desarrollado por **Ing. Yael Ulrick Garay Colin**
 
-<div align="center">
 
-Hecho con React, creatividad y mucho cariño para una celebración muy especial.
-
-</div>
