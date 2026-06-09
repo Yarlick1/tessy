@@ -16,7 +16,6 @@ permissions:
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -31,13 +30,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # 1. Instalar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 2. Instalar pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9 # O la versión que uses localmente
+
+      # 3. Instalar las dependencias de tu proyecto
+      - name: Install dependencies
+        run: pnpm install
+
+      # 4. Compilar el proyecto de Vite inyectando la ruta base de GitHub Pages
+      - name: Build project
+        run: pnpm build -- --base=/tessy/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      # 5. Subir el artefacto (IMPORTANTE: Cambiamos '.' por 'dist')
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: './dist'
+
+      # 6. Desplegar en GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
