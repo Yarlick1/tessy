@@ -75,7 +75,8 @@ export default function App() {
             transition={{ duration: 0.8, ease: "easeInOut" }}
             className="paper-grain fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-cream px-5 py-7"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_6%,rgba(248,221,227,0.92),transparent_24rem),linear-gradient(180deg,rgba(251,245,234,0.08),rgba(248,221,227,0.4))]" />
+
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_6%,rgba(232,150,166,0.92),transparent_24rem),linear-gradient(180deg,rgba(251,245,234,0.08),rgba(232,150,166,0.4))]" />
             <FloralCorner className="absolute -left-10 -top-8 h-48 w-48 opacity-85" />
             <FloralCorner className="absolute -bottom-10 -right-10 h-48 w-48 rotate-180 opacity-85" />
             <div className="absolute inset-4 border border-gold/25" />
@@ -103,8 +104,8 @@ export default function App() {
                   <div className="absolute inset-0 bg-[linear-gradient(150deg,transparent_49.4%,rgba(197,160,89,0.28)_50%,transparent_50.6%),linear-gradient(30deg,transparent_49.4%,rgba(197,160,89,0.22)_50%,transparent_50.6%)]" />
                   <div className="absolute inset-x-0 top-0 h-[7.3rem] origin-top border-b border-gold/25 bg-cream/72 [clip-path:polygon(0_0,100%_0,50%_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 h-[7.4rem] bg-cream/66 [clip-path:polygon(0_100%,50%_24%,100%_100%)]" />
-                  <div className="absolute left-0 top-0 h-full w-1/2 bg-blush/60 [clip-path:polygon(0_0,100%_50%,0_100%)]" />
-                  <div className="absolute right-0 top-0 h-full w-1/2 bg-blush/60 [clip-path:polygon(100%_0,0_50%,100%_100%)]" />
+                  <div className="absolute left-0 top-0 h-full w-1/2 bg-[#E896A6]/60 [clip-path:polygon(0_0,100%_50%,0_100%)]" />
+                  <div className="absolute right-0 top-0 h-full w-1/2 bg-[#E896A6]/60 [clip-path:polygon(100%_0,0_50%,100%_100%)]" />
                 </div>
 
                 <div className="absolute left-1/2 top-[7.45rem] -translate-x-1/2 -translate-y-1/2">
