@@ -73,7 +73,7 @@ const FloralSprig = ({ className = '', flip = false }) => (
     style={{ transform: flip ? 'scaleX(-1)' : undefined }}
   >
     <path d="M24 138C64 82 119 45 193 23" stroke="#B79B50" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M74 91c-17-20-13-43 10-55 14 22 10 41-10 55Z" fill="#F1BECB" stroke="#D39AAA" strokeWidth="1" />
+    <path d="M74 91c-17-20-13-43 10-55 14 22 10 41-10 55Z" fill="#E896A6" stroke="#D39AAA" strokeWidth="1" />
     <path d="M110 64c-8-24 5-43 31-47 6 24-8 40-31 47Z" fill="#F8DDE3" stroke="#D39AAA" strokeWidth="1" />
     <path d="M132 56c12-21 33-27 53-13-12 20-31 25-53 13Z" fill="#F5D4DC" stroke="#D39AAA" strokeWidth="1" />
     <path d="M49 116c-18-8-27-25-19-43 18 8 25 23 19 43Z" fill="#E9AFBF" stroke="#D39AAA" strokeWidth="1" />
@@ -280,10 +280,10 @@ export default function Invitation({ invitado }) {
   };
 
   return (
-    <main ref={invitationRef} className="paper-grain relative mx-auto min-h-screen max-w-lg overflow-hidden bg-cream pb-16 text-ink shadow-[0_30px_90px_rgba(88,64,70,0.24)]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[680px] bg-[radial-gradient(circle_at_50%_0%,rgba(244,204,214,0.72),transparent_58%)]" />
-      <div className="pointer-events-none absolute inset-y-0 left-3 w-px bg-gold/15" />
-      <div className="pointer-events-none absolute inset-y-0 right-3 w-px bg-gold/15" />
+    <main ref={invitationRef} className="paper-grain relative mx-auto min-h-screen max-w-lg overflow-hidden bg-[#E896A6]/15 pb-16 text-ink shadow-[0_30px_90px_rgba(88,64,70,0.24)]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[680px] bg-[radial-gradient(circle_at_40%_0%,rgba(232,150,166,0.92),transparent_58%)]" />
+      <div className="pointer-events-none absolute inset-y-0 left-3 w-px bg-gold/50" />
+      <div className="pointer-events-none absolute inset-y-0 right-3 w-px bg-gold/50" />
 
       <section className="relative min-h-[92svh] px-6 pb-10 pt-16 text-center flex justify-center">
         <FloralSprig className="floral-float absolute -left-16 top-[-1rem] h-44 w-56 opacity-80" />
@@ -352,7 +352,7 @@ export default function Invitation({ invitado }) {
       <section className="relative my-6 px-6 py-14">
         <FloralSprig className="floral-float absolute -left-20 top-0 h-36 w-48 opacity-55" />
         <ScrollReveal>
-          <div className="bg-blush/75 px-5 py-9 shadow-[inset_0_0_0_1px_rgba(197,160,89,0.16)]">
+          <div className="bg-[#E896A6]/50 px-5 py-9 shadow-[inset_0_0_0_1px_rgba(232,150,166,0.92)]">
             <h3 className="mb-8 text-center font-serif text-[0.72rem] uppercase tracking-[0.5em] text-gold">Faltan</h3>
             <div className="grid grid-cols-4 gap-2 text-center">
               {Object.entries(timeLeft).map(([unit, value]) => (
@@ -463,7 +463,7 @@ export default function Invitation({ invitado }) {
         </ScrollReveal>
       </section>
 
-      <section className="relative px-6 pb-20 pt-10 text-center">
+      <section className="relative px-6 pb-20 pt-10 text-center bg-[radial-gradient(circle_at_80%_50%,rgba(232,150,166,0.52),transparent_58%)]">
         <FloralSprig className="absolute -bottom-8 left-1/2 h-40 w-56 -translate-x-1/2 opacity-55" />
         <ScrollReveal>
           <h2 className="mb-4 font-script text-6xl text-ink">Gracias</h2>
