@@ -447,7 +447,15 @@ export default function Invitation({ invitado }) {
               {nombreInvitado}
             </p>
             <p className="mb-5 font-light leading-7 text-mauve">
-              Hemos reservado <strong className="font-medium text-gold">{totalBoletos < 1 ? '1' : totalBoletos} {totalBoletos < 2 ? 'lugar' : 'lugares'}</strong> para ti.
+              {nombreInvitado === 'Salazar Zarco' ? '' : (
+                <>
+                  Hemos reservado{' '}
+                  <strong className="font-medium text-gold">
+                    {totalBoletos < 1 ? '1' : totalBoletos} {totalBoletos < 2 ? 'lugar' : 'lugares'}
+                  </strong>{' '}
+                  para ti.
+                </>
+              )}
             </p>
             <p className="mb-8 font-light text-sm leading-6 text-mauve">Por favor, confirma tu asistencia antes del <b>01 de Julio</b> .</p>
 
